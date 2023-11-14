@@ -1,0 +1,27 @@
+version: 2
+updates:
+  # NuGet config for BlazorMD.SourceGenerator
+  - package-ecosystem: "nuget"
+    directory: "/src/SourceGenerator/"
+    target-branch: "main"
+    reviewers:
+      - "Smalls1652"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependency update"
+    assignees:
+      - "Smalls1652"
+
+  # Config for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "main"
+    reviewers:
+      - "Smalls1652"
+    schedule:
+      interval: "daily"
+    labels:
+      - "dependency update"
+    assignees:
+      - "Smalls1652"
