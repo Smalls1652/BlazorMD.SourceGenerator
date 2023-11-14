@@ -1,0 +1,99 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build project",
+			"detail": "Build a project.",
+			"icon": {
+				"id": "tools",
+				"color": "terminal.ansiYellow"
+			},
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"${workspaceFolder}/${input:projectItem}",
+				"--configuration",
+				"${input:dotnetConfiguration}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Clean project",
+			"detail": "Clean a project.",
+			"icon": {
+				"id": "trashcan",
+				"color": "terminal.ansiBlack"
+			},
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"clean",
+				"${workspaceFolder}/${input:projectItem}",
+				"--configuration",
+				"${input:dotnetConfiguration}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "Restore project",
+			"detail": "Restore a project.",
+			"icon": {
+				"id": "sync",
+				"color": "terminal.ansiBlue"
+			},
+			"type": "process",
+			"command": "dotnet",
+			"args": [
+				"restore",
+				"${workspaceFolder}/${input:projectItem}"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": "$msCompile"
+		},
+		// Remaining tasks are only for the VSCode launch configs
+		// or are supporting tasks.
+	],
+	"inputs": [
+		{
+			"id": "dotnetConfiguration",
+			"description": "Select a configuration for compilation.",
+			"type": "pickString",
+			"default": "Debug",
+			"options": [
+				{
+					"label": "Debug",
+					"value": "Debug"
+				},
+				{
+					"label": "Release",
+					"value": "Release"
+				}
+			]
+		},
+		{
+			"id": "projectItem",
+			"description": "Select a project.",
+			"type": "pickString",
+			"default": "BlazorMD.SourceGenerator.sln",
+			"options": [
+				{
+					"label": "Entire solution",
+					"value": "BlazorMD.SourceGenerator.sln"
+				},
+				{
+					"label": "SourceGenerator",
+					"value": "src/SourceGenerator"
+				}
+			]
+		}
+	]
+}
