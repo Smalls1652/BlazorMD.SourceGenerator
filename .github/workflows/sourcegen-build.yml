@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow
+name: Source Generator / Build
+on:
+  push:
+    tags-ignore: [ 'v*.*.*', 'v*.*.*-*' ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-sourcegen:
+    name: Build BlazorMD.SourceGenerator
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_NOLOGO: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup dotnet SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          global-json-file: global.json
+
+      - name: Build library
+        shell: pwsh
+        run: dotnet restore ./src/SourceGenerator/ ; dotnet build ./src/SourceGenerator/ --no-restore
