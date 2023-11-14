@@ -26,9 +26,9 @@
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.33.0" PrivateAssets="all"
       GeneratePathProperty="true" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0-beta1.23472.1"
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4"
       PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0-3.final"
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.7.0"
       PrivateAssets="all" />
   </ItemGroup>
 
