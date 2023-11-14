@@ -1,0 +1,60 @@
+name: Source Generator / Publish
+
+on:
+  # Automatically trigger it when detected changes in repo
+  # for tagged releases matching 'v*.*.*'
+  push:
+    tags: [ 'v*.*.*', 'v*.*.*-*' ]
+  # Allow manual trigger
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-publish:
+    name: Build and publish package
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        registry-location: [ 'github' ]
+    env:
+      DOTNET_NOLOGO: true
+
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 'dotnet: Setup SDK (GitHub Packages)'
+        uses: actions/setup-dotnet@v3
+        if: ${{ matrix.registry-location == "github" }}
+        with:
+          global-json-file: global.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Install .NET tools
+        run: dotnet tool restore
+
+      - name: Update project files with gitversion
+        run: dotnet tool run dotnet-gitversion /updateprojectfiles
+
+      - name: 'dotnet: Restore'
+        shell: pwsh
+        run: |
+          dotnet restore ./src/SourceGenerator/
+
+      - name: 'dotnet: Create package'
+        shell: pwsh
+        run: |
+          dotnet pack ./src/SourceGenerator/ --configuration Release --no-restore --output ./src/SourceGenerator/
+
+      - name: 'dotnet: Publish package to GitHub Packages'
+        if: ${{ matrix.registry-location == "github" }}
+        shell: pwsh
+        run: |
+          dotnet nuget add source --name "github" --username ${{ github.repository_owner }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json"
+          dotnet nuget push "./src/SourceGenerator/*.nupkg" --source "github"
