@@ -35,7 +35,7 @@ public readonly record struct MarkdownComponentToGenerate
         Name = name;
         Namespace = ns;
         FullyQualifiedName = fullyQualifiedName;
-        MarkdownFileName = $"{name}.md";
+        MarkdownFileName = $"{name}.razor.md";
         FilePath = Path.GetFullPath(filePath).Replace(Path.GetFileName(filePath), string.Empty);
     }
 }
