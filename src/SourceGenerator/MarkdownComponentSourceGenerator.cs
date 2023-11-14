@@ -38,9 +38,7 @@ public class MarkdownComponentSourceGenerator : IIncrementalGenerator
     private static void Execute(SourceProductionContext context, in MarkdownComponentToGenerate? markdownComponentToGenerate, ImmutableArray<MarkdownFile> markdownFiles)
     {
         if (markdownComponentToGenerate is { } markdownComponent)
-        {
-            Console.WriteLine($"Found class {markdownComponent.FullyQualifiedName}");
-            
+        {            
             string filename = $"{markdownComponent.Name}.g.razor.cs";
 
             string markdownFilePath = Path.Combine(markdownComponent.FilePath, markdownComponent.MarkdownFileName);
