@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using System.Text;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -38,7 +39,7 @@ public class MarkdownComponentSourceGenerator : IIncrementalGenerator
     private static void Execute(SourceProductionContext context, in MarkdownComponentToGenerate? markdownComponentToGenerate, ImmutableArray<MarkdownFile> markdownFiles)
     {
         if (markdownComponentToGenerate is { } markdownComponent)
-        {            
+        {
             string filename = $"{markdownComponent.Name}.g.razor.cs";
 
             string markdownFilePath = Path.Combine(markdownComponent.FilePath, markdownComponent.MarkdownFileName);
