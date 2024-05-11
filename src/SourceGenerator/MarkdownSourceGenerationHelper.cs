@@ -16,12 +16,12 @@ public static class MarkdownSourceGenerationHelper
     public static string GenerateSource(MarkdownComponentToGenerate componentToGenerate, string markdownContent)
     {
         var markdownPipeline = new MarkdownPipelineBuilder()
-                .UseGenericAttributes()
                 .UseEmojiAndSmiley()
                 .UseBootstrap()
                 .UseEmphasisExtras()
                 .UsePipeTables()
                 .UseAutoLinks()
+                .UseGenericAttributes()
                 .Build();
 
         string markdownHtml = Markdown.ToHtml(markdownContent, markdownPipeline);
